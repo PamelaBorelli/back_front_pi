@@ -20,7 +20,7 @@
 import './style.css';
 import React from "react";
 import logo_nome from "./imagens/logo_nome.png"; 
-import icone_entrar from "./imagens/icone_entrar.png"; 
+import figura_dash from "./imagens/figura_dash.png"; 
 import { Link } from "react-router-dom"; 
 
 
@@ -32,7 +32,7 @@ function Header() {
       </Link>
 
       <div className="menu">
-        <Link to="/login"> <img className="icone_entrar" src={icone_entrar} alt="icone_entrar" /> </Link>
+        <Link to="/login"> <img className="figura_dash" src={figura_dash} alt="figura_dash" /> </Link>
       </div>
     </header>
   );

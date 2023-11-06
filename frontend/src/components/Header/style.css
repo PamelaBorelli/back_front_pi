@@ -23,14 +23,15 @@ header a + a {
 
 img.logo{
     display: flex;
-   /* position: absolute; */
+   position: relative;
    left: 0px;
    height: 95px;;
    width: 120px;
    margin-top: 50px;
+   justify-content: space-between;
 }
 
-img.icone_entrar{
+img.figura_dash{
     display: flex;
    height: 70px;;
    width: 30px;
