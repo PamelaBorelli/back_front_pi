@@ -1,0 +1,40 @@
+footer{
+    width: 100%;
+    height: 400px;
+    background-color: rgba(38, 67, 142, 1);
+    color: white;
+    font-family: montserrat;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+}
+
+footer a{
+    color: white;
+    font-size: 20px;
+}
+
+footer a + a {
+    margin-left: 10px;
+}
+
+footer iframe{
+    margin-right: 45px;
+}
+
+img.logo_nome{
+    display: flex;
+   height: 165px;;
+   width: 290px;
+   margin-top: 30px;
+}
+
+ul{
+    display: flex;
+    list-style: none;
+    font-family: montserrat;
+    font-weight: bold;
+    display: list-item;
+    margin-left: 40px;
+}
