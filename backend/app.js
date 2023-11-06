@@ -13,6 +13,6 @@ conn()
 const routes = require("./routes/router")
 app.use("/api", routes)
 
-app.listen(5000, function (){
+app.listen(3000, function (){
     console.log("servidor online")
 })
