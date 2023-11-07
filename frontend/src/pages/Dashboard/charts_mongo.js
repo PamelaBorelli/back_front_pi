@@ -2,7 +2,7 @@ import React, {  useEffect } from "react";
 import ChartsEmbedSDK from "@mongodb-js/charts-embed-dom";
 
 
-const Chart = () => {
+const Mongo = () => {
   const sdk = new ChartsEmbedSDK({baseUrl: "https://charts.mongodb.com/charts-minha-api-rest-wevhj"});
 
 
@@ -21,6 +21,6 @@ const Chart = () => {
 
 }
 
-export default Chart;
+export default Mongo;
 
             

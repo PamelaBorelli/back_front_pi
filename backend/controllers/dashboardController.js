@@ -1,27 +1,7 @@
 const {Dashboard:DashboardModel} = require('../models/Dashboard')
 
 const dashboardController = {
-    create: async(req,res) =>{
-        try {
-
-            const dashboard = {
-
-                air_temp: req.body.air_temp,
-                dni: req.body.dni,
-                ghi: req.body.ghi,
-                period_end: req.body.period_end,
-                period: req.body.period,
-
-            }
-            const response = await DashboardModel.create(dashboard);
-
-            res.status(201).json({response, msg: "dados criado com sucesso"})
-
-        } catch (error) {
-            console.log(error);
-        }
-    },
-
+    
     getAll: async(req, res) => {
 
         try {
@@ -33,19 +13,58 @@ const dashboardController = {
     }
  },
 
-    get: async(req,res)=>{
+    // get: async(req,res)=>{
+    //     try {
+
+    //         const id = req.params.id
+    //         const dashboard = await DashboardModel.findById(id);
+
+    //         res.json(dashboard)
+
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // },
+
+    
+    get: async (req,res) => {
+
         try {
+            const startRange = new Date(req.params.startDate);
+            const endRange = new Date(req.params.endDate);
+        
+            const registros = await DashboardModel.find({
+              period_end: { $gte: startRange, $lte: endRange }
+            });
 
-            const id = req.params.id
-            const dashboard = await DashboardModel.findById(id);
+            if (registros && registros.length > 0) {
+                res.json(registros); 
+              } else {
+                res.status(404).json({ message: 'Nenhum registro encontrado para o intervalo de datas especificado' });
+              }
+            } catch (err) {
+              res.status(500).json({ message: err.message });
+            }
+    },
 
-            res.json(dashboard)
-
-        } catch (error) {
-            console.log(error);
+    getSelection: async (req, res) => {
+   
+        try {
+        const { startDate, endDate } = req.params;
+          const data = await DashboardModel.find({
+            period_end: {
+              $gte: new Date(startDate),
+              $lte: new Date(endDate)
+            }
+          });
+      
+          res.json(data);
+        } catch (err) {
+          res.status(500).json({ message: err.message });
         }
-    }
+      }
 
-}
+  };
+
 
 module.exports = dashboardController;
