@@ -1,20 +1,8 @@
-# POST http://localhost:3000/api/dashboards
-# Content-Type: application/json
+###
+GET http://localhost:3000/api/dashboards/
 
-# {
-#   "air_temp": 25,
-#   "dni": 124,
-#   "ghi": 421,
-#   "period_end": "2023-12-12",
-#   "period": 1.00
-# }
+# ###
+# GET http://localhost:3000/api/dashboards/654a4a012d9810e7a7684fc2
 
 ###
-GET http://localhost:3000/api/dashboards
-
-###
-GET http://localhost:3000/api/dashboards/654a4a012d9810e7a7684fc2
-
-###
-GET http://localhost:3000/api/dashboards/2020-01-01/2021-04-18
-
+GET http://localhost:3000/api/dashboards/2022-01-01/2022-02-31/?limit=30

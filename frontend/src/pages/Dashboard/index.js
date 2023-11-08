@@ -1,5 +1,5 @@
 import React from "react";
-import Chart from "./charts";
+import Chart from "./filtro";
 // import Mongo from "./charts_mongo"
 
 

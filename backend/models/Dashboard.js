@@ -6,7 +6,7 @@ const dashboardSchema = new Schema({
   air_temp: Number,
   dni: Number,
   ghi: Number,
-  period_end: Date,
+  period_end: String,
   period: String
 })
 
