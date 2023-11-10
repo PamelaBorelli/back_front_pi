@@ -5,6 +5,8 @@ import { calculateAverage } from './estatistica/media';
 import { calculateMedian } from './estatistica/mediana'; 
 import { calculateStandardDeviation } from './estatistica/desvio_padrao'; 
 import { calculateMode } from './estatistica/moda'; 
+import { calculateSkewness } from './estatistica/assimetria'; 
+import { calculateKurtosis } from './estatistica/curtose'; 
 import "./style.css"
 
 const Chart = () => {
@@ -15,6 +17,8 @@ const Chart = () => {
   const [mediana, setMediana] = useState(0);
   const [desvioPadrao, setPesvioPadrao] = useState(0);
   const [moda, setModa] = useState(0);
+  const [assimetria, setSkewness] = useState(0);
+  const [curtose, setKurtosiss] = useState(0);
 
   useEffect(() => {
     if (startDate && endDate) {
@@ -28,6 +32,10 @@ const Chart = () => {
           setPesvioPadrao(desvioPadrao)
           const moda = calculateMode(data);
           setModa(moda)
+          const assimetria = calculateSkewness(data);
+          setSkewness(assimetria)
+          const curtose = calculateKurtosis(data);
+          setKurtosiss(curtose)
 
           const series = [
             {name: 'Temp. do ar', type: 'column', data: data.map(d => d.air_temp), color: "#26438E"},
@@ -217,6 +225,18 @@ const Chart = () => {
     </div>
   </div>
 
+  <div class="row">
+  <div class="card">
+    <h3>Assimetria</h3>
+    <p>{assimetria}</p>
+  </div>
+
+    <div class="card">
+      <h3>Curtose</h3>
+      <p>{curtose}</p>
+    </div>
+  </div>
+
 
       <div id="charts">
       <ReactApexChart options={state.options} series={state.series} type="line" height={450} width={1200}/>
@@ -227,6 +247,3 @@ const Chart = () => {
 };
 
 export default Chart;
-
-
-
