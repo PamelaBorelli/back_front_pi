@@ -25,15 +25,19 @@ img.logo{
     display: flex;
    position: relative;
    left: 0px;
-   height: 95px;;
+   height: 45px;;
    width: 120px;
    margin-top: 50px;
    justify-content: space-between;
+   padding: 0px;
+   margin: 0;
 }
 
 img.figura_dash{
     display: flex;
-   height: 70px;;
-   width: 30px;
+   height: 22px;;
+   width: 25px;
    margin-top: 50px;
+   padding: 0px;
+   margin: 0;
 }

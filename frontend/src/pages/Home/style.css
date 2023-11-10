@@ -1,0 +1,31 @@
+#home {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 80px;
+}
+
+#home img {
+  flex: 1 1 30%;
+  max-height: 250px;
+  max-width: 270px;
+  margin: 20px;
+  object-fit: cover;
+  border-radius: 10px;
+  padding: 0px;
+
+
+}
+
+#home p {
+  flex: 2 1 60%;
+  font-family: 'monserrat', sans-serif;
+  font-size: 1.2em;
+  line-height: 1.6;
+  min-height: 230px;  
+  color: #333;
+  text-align: justify;
+  padding: 20px;
+
+}

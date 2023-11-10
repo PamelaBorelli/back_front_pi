@@ -18,6 +18,7 @@ const Login = () => {
   }
   return (
     <Container>
+        
         <Input
         placeholder='E-mail'
         value={email}
@@ -44,6 +45,7 @@ const Container = styled.div`
     justify-content: center;
     background-color: #fff;
     height: 95vh;
+    border: 2px
 `;
 
 const Input = styled.input`

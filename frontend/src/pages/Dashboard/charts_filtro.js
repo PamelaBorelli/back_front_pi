@@ -5,6 +5,7 @@ import { calculateAverage } from './estatistica/media';
 import { calculateMedian } from './estatistica/mediana'; 
 import { calculateStandardDeviation } from './estatistica/desvio_padrao'; 
 import { calculateMode } from './estatistica/moda'; 
+import "./style.css"
 
 const Chart = () => {
   const [startDate, setStartDate] = useState('');
@@ -39,6 +40,14 @@ const Chart = () => {
               height: 350, 
               type: 'line', 
               stacked: false
+            },
+
+            dropShadow: {
+              enabled: true,
+              top: 0,
+              left: 0,
+              blur: 3,
+              opacity: 0.5
             },
 
             dataLabels: {
@@ -177,31 +186,41 @@ const Chart = () => {
 
   return (
     <div className='APP'>
+
+      <div id="filtro">
       <h6 style={{marginLeft:30, marginTop:30}}>*Os dados são limitados à consulta de um período de sete dias</h6>
       <input type="date" value={startDate} onChange={handleStartDateChange} style={{marginLeft:30, marginBottom:30, marginTop:10}}/>
       <input type="date" value={endDate} onChange={handleEndDateChange}/>
-
-      <div className="card">
-        <h2>Média GHI</h2>
-        <p>{media}</p>
       </div>
 
-      <div className="card">
-        <h2>Médiana GHI</h2>
-        <p>{mediana}</p>
-      </div>
+      <div class="row">
+  <div class="card">
+    <h3>Média</h3>
+    <p>{media}</p>
+  </div>
 
-      <div className="card">
-        <h2>Desvio Padrão GHI</h2>
-        <p>{desvioPadrao}</p>
-      </div>
+    <div class="card">
+      <h3>Médiana</h3>
+      <p>{mediana}</p>
+    </div>
+  </div>
 
-      <div className="card">
-        <h2>Moda GHI</h2>
-        <p>{moda}</p>
-      </div>
+  <div class="row">
+    <div class="card">
+      <h3>Desvio Padrão</h3>
+      <p>{desvioPadrao}</p>
+    </div>
 
+    <div class="card">
+      <h3>Moda</h3>
+      <p>{moda}</p>
+    </div>
+  </div>
+
+
+      <div id="charts">
       <ReactApexChart options={state.options} series={state.series} type="line" height={450} width={1200}/>
+      </div>
 
     </div>
   );
