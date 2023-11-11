@@ -1,8 +1,12 @@
-const router = require("express").Router()
+const express = require("express");
+const router = express.Router();
 
-// dashboard router
-const dashboardRouter = require("./dashboards")
+// Importe os roteadores específicos
+const dadosSolaresRouter = require("./dadosSolares");
+const usuarioRouter = require("./usuario");
 
-router.use("/", dashboardRouter)
+// Defina as rotas específicas usando os roteadores importados
+router.use("/dadosSolares", dadosSolaresRouter);
+router.use("/usuarios", usuarioRouter);
 
-module.exports = router
+module.exports = router;
