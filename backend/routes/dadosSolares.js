@@ -24,16 +24,31 @@ router.route('/')
     }
 });
 
+// // Rota para obter dados solares com filtros
+// router.get('/', async function (req, res) {
+// try {
+//     const dadosSolares = await DadosSolares.find();
+//     console.log(dadosSolares.length)
+//     res.json(dadosSolares);
+// } catch (err) {
+//     res.status(500).send(err);
+// }
+// });
+
+
 // Rota para obter dados solares com filtros
 router.get('/', async function (req, res) {
-try {
-    const dadosSolares = await DadosSolares.find();
-    console.log("1")
-    res.json(dadosSolares);
-} catch (err) {
-    res.status(500).send(err);
-}
-});
+    try {
+        const startDate = req.query.startDate;
+        const endDate = req.query.endDate;
+        const dadosSolares = await DadosSolares.find({ period_end: { $gte: startDate, $lte: endDate } });
+        console.log(dadosSolares.length)
+        res.json(dadosSolares);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+    });
+    
 
 
 router.route('/')
@@ -47,3 +62,6 @@ router.route('/')
 });
 
 module.exports = router;
+
+
+

@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const app = express();
 const bodyParser = require('body-parser');
 const routes = require('./routes/router');
+const cors = require('cors');
+
+app.use(cors());
 
 mongoose.connect('mongodb+srv://adm:pi%40123@cluster0.njnekqa.mongodb.net/')
     .then(() => console.log('Conexão com MongoDB estabelecida'))

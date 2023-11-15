@@ -1,8 +1,5 @@
 ###
-GET http://localhost:3000/api/dashboards/
-
-# ###
-# GET http://localhost:3000/api/dashboards/654a4a012d9810e7a7684fc2
+GET http://localhost:8000/dadosSolares
 
 ###
-GET http://localhost:3000/api/dashboards/2022-01-01/2022-02-31/?limit=30
+GET http://localhost:8000/dadosSolares/?startDate=2021-01-01&endDate=2021-12-30
