@@ -4,9 +4,6 @@ const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const routes = require('./routes/router');
-const cors = require('cors');
-
-app.use(cors());
 
 mongoose.connect('mongodb+srv://adm:pi%40123@cluster0.njnekqa.mongodb.net/meuBancoDeDados', {
   useNewUrlParser: true,

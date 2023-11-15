@@ -2,4 +2,4 @@
 GET http://localhost:8000/dadosSolares
 
 ###
-GET http://localhost:8000/dadosSolares/?startDate=2021-01-01&endDate=2021-12-30
+GET http://localhost:8000/dadosSolares/?startDate=2021-01-01&endDate=2021-01-02

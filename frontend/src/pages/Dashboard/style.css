@@ -6,7 +6,9 @@ background-color: whitesmoke;
     display: flex;
     justify-content: left;
     margin-bottom: 30px;
+
   }
+
   
 .card {
     position: relative;
@@ -40,3 +42,14 @@ background-color: whitesmoke;
     padding-bottom: 80px;
     padding-top: 30px;
   }
+
+#chartScatter{
+  display: flex;
+  justify-content: right;
+  padding: 0px;
+  margin: 0px;
+  height: 350; 
+  width: 600;
+  margin-top: 50px;
+
+}

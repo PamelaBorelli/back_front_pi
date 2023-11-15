@@ -1,6 +1,5 @@
 import React from "react";
 import Chart from "./charts_filtro";
-import ScatterChart from './estatistica/regressao'
 
 
 function Dashboard (){
@@ -8,7 +7,6 @@ function Dashboard (){
   return ( 
       <div > 
         <Chart />
-        <ScatterChart/>
       </div>
   )
 };
