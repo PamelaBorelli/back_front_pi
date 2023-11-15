@@ -72,6 +72,31 @@ router.route('/:usuario_id')
         }
     });
 
+router.route('/login')
+    .post(async function (req, res) {
+        const { login, senha } = req.body;
+
+        try {
+            const usuario = await Usuario.findOne({ login });
+
+            if (!usuario) {
+                return res.status(401).json({ message: 'Usuário não encontrado' });
+            }
+
+            const senhaValida = passwordSchema.validate(senha);
+
+            if (!senhaValida || usuario.senha !== senha) {
+                return res.status(401).json({ message: 'Login ou senha inválidos' });
+            }
+
+            const token = gerarToken(usuario);
+
+            res.json({ token });
+        } catch (err) {
+            res.status(500).send(err);
+        }
+    });
+
 function gerarToken(usuario) {
     const dataCriacao = new Date();
     const tresMesesEmSegundos = 3 * 30 * 24 * 60 * 60; // 3 meses em segundos
@@ -85,7 +110,7 @@ function gerarToken(usuario) {
 }
 
 function verificarToken(req, res, next) {
-    const token = req.headers.authorization; // Assumindo que o token é enviado no cabeçalho 'Authorization'
+    const token = req.headers.authorization;
 
     if (!token) {
         return res.status(401).json({ message: 'Token não fornecido' });
@@ -96,10 +121,8 @@ function verificarToken(req, res, next) {
             return res.status(401).json({ message: 'Token inválido' });
         }
 
-        // O token é válido, você pode adicionar os dados decodificados (por exemplo, o ID do usuário) ao objeto de solicitação
         req.userId = decoded.id;
 
-        // Continue com a próxima função de middleware ou a rota protegida
         next();
     });
 }
