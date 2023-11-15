@@ -1,44 +1,60 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import logo_nome from "../../components/Footer/imagens/logo_nome.png"; 
 
-const Login = () => {
+const Cadastro = () => {
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
   const [login, setLogin] = useState('');
-  const [password, setPassword] = useState('');
+  const [senha, setSenha] = useState('');
   const [error, setError] = useState('');
+
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleCadastro = async () => {
     try {
-      const response = await fetch('http://localhost:8000/usuarios/login', {
+      const response = await fetch('http://localhost:8000/usuarios', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ login, senha: password }),
+        body: JSON.stringify({
+          nome,
+          email,
+          login,
+          senha,
+        }),
       });
 
       if (response.ok) {
-        const { token } = await response.json();
-        // Salve o token onde você precisar (por exemplo, localStorage, contexto global)
-        alert('Login bem-sucedido!');
-        navigate('/dashboard');
+        alert('Cadastro realizado com sucesso!');
+        navigate('/login');
       } else {
         const errorData = await response.json();
         setError(errorData.message);
       }
     } catch (error) {
-      console.error('Erro ao realizar login:', error);
-      setError('Erro ao realizar login. Por favor, tente novamente.');
+      console.error('Erro ao realizar cadastro:', error);
+      alert('Erro ao realizar cadastro. Por favor, tente novamente.');
     }
-  };
-
-  const handleCadastroRedirect = () => {
-    navigate('/cadastro');
   };
 
   return (
     <Container>
+      {/* Adicione a imagem da sua logo aqui */}
+      <img className="logo_nome" src={logo_nome} alt="Logo" />
+
+      <Input
+        placeholder='Nome'
+        value={nome}
+        onChange={(e) => setNome(e.target.value)}
+      />
+      <Input
+        placeholder='E-mail'
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
       <Input
         placeholder='Login'
         value={login}
@@ -47,16 +63,13 @@ const Login = () => {
       <Input
         placeholder='Senha'
         type='password'
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        value={senha}
+        onChange={(e) => setSenha(e.target.value)}
       />
-      {error && <ErrorText>{error}</ErrorText>}
-      <Button onClick={handleLogin}>
-        <ButtonText>ENTRAR</ButtonText>
+      <Button onClick={handleCadastro}>
+        <ButtonText>CADASTRAR</ButtonText>
       </Button>
-      <StyledCadastrarButton onClick={handleCadastroRedirect}>
-        Cadastrar
-      </StyledCadastrarButton>
+      {error && <ErrorText>{error}</ErrorText>}
     </Container>
   );
 };
@@ -69,6 +82,12 @@ const Container = styled.div`
   background-color: #fff;
   height: 95vh;
   border: 2px;
+`;
+
+const LogoImage = styled.img`
+  width: 150px; // Ajuste conforme necessário
+  height: 150px; // Ajuste conforme necessário
+  margin-bottom: 20px;
 `;
 
 const Input = styled.input`
@@ -92,21 +111,8 @@ const ButtonText = styled.span`
   font-weight: bold;
 `;
 
-const StyledCadastrarButton = styled.p`
-  color: #a9a9a9;
-  cursor: pointer;
-  margin-top: 10px;
-  font-weight: bold;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
 const ErrorText = styled.p`
   color: red;
   margin-top: 10px;
-  font-weight: bold;
 `;
-
-export default Login;
+export default Cadastro;
