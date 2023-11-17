@@ -20,7 +20,6 @@ const Login = () => {
 
       if (response.ok) {
         const { token } = await response.json();
-        // Salve o token onde você precisar (por exemplo, localStorage, contexto global)
         alert('Login bem-sucedido!');
         navigate('/dashboard');
       } else {

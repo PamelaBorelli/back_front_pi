@@ -5,10 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const routes = require('./routes/router');
 
-mongoose.connect('mongodb+srv://adm:pi%40123@cluster0.njnekqa.mongodb.net/meuBancoDeDados', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect('mongodb+srv://adm:pi%40123@cluster0.njnekqa.mongodb.net/meuBancoDeDados')
   .then(() => console.log('Conexão com MongoDB estabelecida'))
   .catch(err => console.log('Erro de conexão com MongoDB:', err));
 

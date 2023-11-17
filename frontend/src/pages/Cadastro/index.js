@@ -85,8 +85,8 @@ const Container = styled.div`
 `;
 
 const LogoImage = styled.img`
-  width: 150px; // Ajuste conforme necessário
-  height: 150px; // Ajuste conforme necessário
+  width: 150px; 
+  height: 150px;
   margin-bottom: 20px;
 `;
 

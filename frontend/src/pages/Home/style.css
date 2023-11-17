@@ -13,19 +13,16 @@
   margin: 20px;
   object-fit: cover;
   border-radius: 10px;
-  padding: 0px;
-
-
+  padding: 0;
 }
 
 #home p {
   flex: 2 1 60%;
-  font-family: 'monserrat', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 1.2em;
   line-height: 1.6;
   min-height: 230px;  
   color: #333;
   text-align: justify;
   padding: 20px;
-
 }
