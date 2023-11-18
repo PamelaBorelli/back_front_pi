@@ -2,6 +2,77 @@ const express = require('express');
 const router = express.Router();
 var DadosSolares = require('../models/dadosSolares');
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Usuario:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           format: int64
+ *         nome:
+ *           type: string
+ *         email:
+ *           type: string
+ *           format: email
+ *         senha:
+ *           type: string
+ *           format: password
+ *         dataNascimento:
+ *           type: string
+ *           format: date
+ *       required:
+ *         - nome
+ *         - email
+ *         - senha
+ *
+ *     DadosSolares:
+ *       type: object
+ *       properties:
+ *         air_temp:
+ *           type: number
+ *         dni:
+ *           type: number
+ *         ghi:
+ *           type: number
+ *         period_end:
+ *           type: string
+ *           format: date-time
+ *         period:
+ *           type: string
+ *       required:
+ *         - air_temp
+ *         - dni
+ *         - ghi
+ *         - period_end
+ *         - period
+ */
+
+/**
+ * @swagger
+ * /dados-solares:
+ *   post:
+ *     summary: Insere uma lista de dados solares
+ *     tags: [Dados Solares]
+ *     requestBody:
+ *       description: Lista de dados solares a serem inseridos
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: array
+ *             items:
+ *               $ref: '#/components/schemas/DadosSolares'
+ *     responses:
+ *       201:
+ *         description: Lista de dados solares inserida com sucesso
+ *       400:
+ *         description: Formato de lista inválido
+ *       500:
+ *         description: Erro interno do servidor
+ */
 router.route('/')
 .post(async function (req, res) {
     try {
@@ -24,19 +95,31 @@ router.route('/')
     }
 });
 
-// // Rota para obter dados solares com filtros
-// router.get('/', async function (req, res) {
-// try {
-//     const dadosSolares = await DadosSolares.find();
-//     console.log(dadosSolares.length)
-//     res.json(dadosSolares);
-// } catch (err) {
-//     res.status(500).send(err);
-// }
-// });
-
-
-// Rota para obter dados solares com filtros
+/**
+ * @swagger
+ * /dados-solares:
+ *   get:
+ *     summary: Obtém dados solares com base em filtros de data
+ *     tags: [Dados Solares]
+ *     parameters:
+ *       - in: query
+ *         name: startDate
+ *         description: |
+ *           Data de início para filtrar os dados solares (formato: YYYY-MM-DD)
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: endDate
+ *         description: |
+ *           Data de término para filtrar os dados solares (formato: YYYY-MM-DD)
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Dados solares filtrados com sucesso
+ *       500:
+ *         description: Erro interno do servidor
+ */
 router.get('/', async function (req, res) {
     try {
         const startDate = req.query.startDate;
@@ -50,7 +133,18 @@ router.get('/', async function (req, res) {
     });
     
 
-
+/**
+ * @swagger
+ * /dados-solares:
+ *   delete:
+ *     summary: Exclui todos os dados solares
+ *     tags: [Dados Solares]
+ *     responses:
+ *       200:
+ *         description: Todos os dados solares excluídos com sucesso
+ *       500:
+ *         description: Erro interno do servidor
+ */
 router.route('/')
 .delete(async function (req, res) {
     try {

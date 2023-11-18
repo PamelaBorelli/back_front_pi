@@ -14,6 +14,94 @@ passwordSchema
     .has().digits()
     .has().symbols();
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Usuario:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           format: int64
+ *         nome:
+ *           type: string
+ *         email:
+ *           type: string
+ *           format: email
+ *         senha:
+ *           type: string
+ *           format: password
+ *         dataNascimento:
+ *           type: string
+ *           format: date
+ *       required:
+ *         - nome
+ *         - email
+ *         - senha
+ *
+ *     DadosSolares:
+ *       type: object
+ *       properties:
+ *         air_temp:
+ *           type: number
+ *         dni:
+ *           type: number
+ *         ghi:
+ *           type: number
+ *         period_end:
+ *           type: string
+ *           format: date-time
+ *         period:
+ *           type: string
+ *       required:
+ *         - air_temp
+ *         - dni
+ *         - ghi
+ *         - period_end
+ *         - period
+ *
+ *     NovoUsuario:
+ *       type: object
+ *       properties:
+ *         nome:
+ *           type: string
+ *         email:
+ *           type: string
+ *           format: email
+ *         senha:
+ *           type: string
+ *           format: password
+ *         dataNascimento:
+ *           type: string
+ *           format: date
+ *       required:
+ *         - nome
+ *         - email
+ *         - senha
+ */
+
+
+/**
+ * @swagger
+ * /usuarios:
+ *   post:
+ *     summary: Cria um novo usuário
+ *     tags: [Usuarios]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Usuario' 
+ *     responses:
+ *       200:
+ *         description: Usuário criado com sucesso
+ *       400:
+ *         description: Já existe um usuário com esse email ou a senha não atende aos critérios de força
+ *       500:
+ *         description: Erro interno do servidor
+ */
 router.route('/')
     .post(async function (req, res) {
         var usuario = new Usuario();
@@ -45,6 +133,19 @@ router.route('/')
         }
     })
 
+     /**
+     * @swagger
+     * /usuarios:
+     *   get:
+     *     summary: Obtém todos os usuários
+     *     tags: [Usuarios]
+     *     responses:
+     *       200:
+     *         description: Lista de usuários
+     *       500:
+     *         description: Erro interno do servidor
+     */
+
     .get(verificarToken, async function (req, res) {
         try {
             const usuarios = await Usuario.find();
@@ -53,6 +154,19 @@ router.route('/')
             res.status(500).send(err);
         }
     })
+
+     /**
+     * @swagger
+     * /usuarios:
+     *   delete:
+     *     summary: Exclui todos os usuários
+     *     tags: [Usuarios]
+     *     responses:
+     *       200:
+     *         description: Todos os usuários foram excluídos com sucesso
+     *       500:
+     *         description: Erro interno do servidor
+     */
     .delete(verificarToken, async function (req, res) {
         try {
             await Usuario.deleteMany({});
@@ -62,6 +176,25 @@ router.route('/')
         }
     });
 
+/**
+ * @swagger
+ * /usuarios/{usuario_id}:
+ *   delete:
+ *     summary: Exclui um usuário pelo ID
+ *     tags: [Usuarios]
+ *     parameters:
+ *       - in: path
+ *         name: usuario_id
+ *         required: true
+ *         description: ID do usuário a ser excluído
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Usuário excluído com sucesso
+ *       500:
+ *         description: Erro interno do servidor
+ */
 router.route('/:usuario_id')
     .delete(verificarToken, async function (req, res) {
         try {
@@ -72,6 +205,35 @@ router.route('/:usuario_id')
         }
     });
 
+
+/**
+ * @swagger
+ * /usuarios/login:
+ *   post:
+ *     summary: Realiza o login do usuário
+ *     tags: [Usuarios]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               login:
+ *                 type: string
+ *               senha:
+ *                 type: string
+ *             required:
+ *               - login
+ *               - senha
+ *     responses:
+ *       200:
+ *         description: Token gerado com sucesso
+ *       401:
+ *         description: Usuário não encontrado ou login/senha inválidos
+ *       500:
+ *         description: Erro interno do servidor
+ */
 router.route('/login')
     .post(async function (req, res) {
         const { login, senha } = req.body;

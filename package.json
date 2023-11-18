@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "mongoose": "^8.0.0",
-    "mongose": "^0.0.2-security"
+    "mongose": "^0.0.2-security",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
   }
 }
