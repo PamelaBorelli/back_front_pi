@@ -105,9 +105,9 @@ passwordSchema
 router.route('/')
     .post(async function (req, res) {
         var usuario = new Usuario();
-        usuario.nome = req.body.nome;
+        usuario.nome = req.body.nome.trim();
         usuario.email = req.body.email;
-        usuario.login = req.body.login;
+        usuario.login = req.body.login.trim();
         usuario.senha = req.body.senha;
         usuario.dataInscricao = new Date();
 
