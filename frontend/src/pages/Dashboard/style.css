@@ -5,7 +5,7 @@ body{
 .row {
   display: flex;
   justify-content: left;
-  margin-bottom: 30px;
+  margin-bottom: 35px;
   margin-right: 100px;
 }
 
@@ -21,8 +21,16 @@ body{
   border-radius: 15px;
   width: 200px;
   margin-left: 50px;
-  margin-top: 20px;
+  margin-top: 15px;
 
+}
+
+h3{
+  margin-top: 0px;
+  text-align: center;
+  font-family: "montserrat";
+  padding: 30px;
+  padding-bottom: 40px;
 }
 
 .card h3 {
@@ -36,10 +44,19 @@ body{
   margin-bottom: 0px;
 }
 
-#charts{
+#chartsScatter{
   position: relative;
   padding: 0px;
-  margin: 0px;
+  margin: 20px;
+  margin-left: 55px;
+  padding-bottom: 50px;
+  padding-top: 10px;
+}
+
+#chartsLine{
+  position: relative;
+  padding: 0px;
+  margin: 20px;
   padding-bottom: 50px;
   padding-top: 10px;
 }
@@ -50,13 +67,41 @@ body{
   justify-content: left;
   align-items: center;
   margin: 30px;
+  margin-bottom: 10px;
 }
 
 #filtro h6 {
   margin: 10px;
+  margin-bottom: 0px;
 }
 
 #filtro input {
   margin: 10px;
+  margin-bottom: 0px;
+}
+
+.legend {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin: 30px;
+  margin-bottom: 10px;
+  font-family: "montserrat";
+
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+
+}
+
+.legend-color {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+  border-radius: 100%;
 }
 

@@ -8,12 +8,14 @@ import { calculateMode } from './estatistica/moda';
 import { calculateSkewness } from './estatistica/assimetria'; 
 import { calculateNormalDistribution } from './estatistica/distribuicaoNormal';
 import { calculateFirstQuartile, calculateThirdQuartile } from './estatistica/quartil'
+import { calculateLinearRegression } from './estatistica/regressao';
+import Legend from './legenda'
 import "./style.css"
 
 const Chart = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [state, setState] = useState({series: [],options: {}, boxPlotSeries:[], boxPlotOptions:{} });
+  const [state, setState] = useState({series: [],options: {}, boxPlotSeries:[], boxPlotOptions:{},regressionSeries: [], regressionOptions: {}});
   const [media, setMedia] = useState(0);
   const [mediana, setMediana] = useState(0);
   const [desvioPadrao, setPesvioPadrao] = useState(0);
@@ -22,7 +24,8 @@ const Chart = () => {
   const [distribution, setDistribution] = useState(0);
   const [x, setX] = useState(0); 
   const [q1, setFirstQuartil] = useState(0);
-  const [q3, setThirdQuartil] = useState()
+  const [q3, setThirdQuartil] = useState(0)
+
 
   useEffect(() => {
     if (startDate && endDate) {
@@ -46,10 +49,13 @@ const Chart = () => {
           setThirdQuartil(q3)
           const max = Math.max(...data.map(d => d.ghi));
           const min = Math.min(...data.map(d => d.ghi));
-
+          const regression = calculateLinearRegression(data);
+          const regressionLine = data.map(d => regression.m * d.dni + regression.b);
+          
+          // gráfico de barras e linha
           const series = [
-            {name: 'Temp. do ar', type: 'column', data: data.map(d => d.air_temp), color: "#26438E"},
-            {name: 'DNI', type: 'column', data: data.map(d => d.dni), color: '#2D81C2'},
+            {name: 'Temp. do ar', type: 'column', data: data.map(d => d.air_temp), color: '#2D81C2'},
+            {name: 'DNI', type: 'column', data: data.map(d => d.dni), color: "#26438E"},
             {name: 'GHI', type: 'line', data: data.map(d => d.ghi), color: '#FFC20F'},
           ];
 
@@ -61,13 +67,13 @@ const Chart = () => {
             },
 
             stroke: {
-              width: [1, 2, 3]
+              width: [1, 1, 3]
             },
 
             title: {
               text: 'Produção de energia e dados do clima', 
               align: 'left', 
-              offsetX: 110
+              offsetX: 110,
             },
 
             xaxis: {
@@ -155,9 +161,15 @@ const Chart = () => {
             legend: {
               horizontalAlign: 'left', 
               offsetX: 40
-            }
+            },
+            plotOptions: {
+              bar: {
+                  columnWidth: '100%',
+              }
+          }
           };      
           
+          // gráfico de distribuição normal
           const boxPlotSeries = [{
             name: 'GHI',
             type: 'boxPlot',
@@ -200,10 +212,85 @@ const Chart = () => {
                 offsetY: 30, 
                 offsetX: 60
               }
+            },  
+          };
+
+          // gráfico de distribuição e regressão linear 
+          const regressionSeries = [{
+            name: 'Dispersão',
+            data: data.map(d => [d.dni, d.ghi]),
+            color: '#2D81C2'
+          }, {
+            name: 'Regressão Linear',
+            data: data.map((d, i) => [d.dni, regressionLine[i]]),
+            type: 'line',
+            color: '#FFC20F'
+          }];
+          
+          const regressionOptions = {
+            chart: {
+              type: 'scatter',
+              height: 350,
+            },
+            title: {
+              text: 'Gráfico Dispersão e Regressão',
+              align: 'left', 
+              offsetX: 110
+            },
+            xaxis: {
+              type: 'numeric',
+              title: {
+                text: 'DNI',
+                style: {
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  color: '#263238'
+                }
+              },
+              labels: {
+                formatter: function (val) {
+                  return val.toFixed(2);
+                },
+                style: {
+                  fontSize: '12px',
+                  colors: '#263238'
+                },
+                rotate: -45
+              },
+              tickAmount: 10 
+            },
+            yaxis: {
+              type: 'numeric',
+              title: {
+                text: 'GHI',
+                style: {
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  color: '#263238'
+                }
+              },
+              labels: {
+                formatter: function (val) {
+                  return val.toFixed(2);
+                },
+                style: {
+                  fontSize: '12px',
+                  colors: '#263238'
+                }
+              }
+            },
+            tooltip: {
+              fixed: {
+                enabled: true,
+                position: 'topLeft',
+                offsetY: 30,
+                offsetX: 60
+              }
             },
           };
           
-          setState({ series, options, boxPlotSeries, boxPlotOptions });
+          
+          setState({ series, options, boxPlotSeries, boxPlotOptions, regressionSeries, regressionOptions });
 
         })
 
@@ -227,6 +314,7 @@ const Chart = () => {
 
 
   return (
+
     <div className='APP'>
 
     <div id="filtro">
@@ -245,8 +333,56 @@ const Chart = () => {
         <input type="number" value={x} onChange={handleXChange}/> 
       </div>
     </div>
+
+    <Legend items={[
+      { color: '#2D81C2', label: ' DNI: Irradiação Solar Direta Normal' }, { color: '#FFC20F', label: 'GHI: Irradiação Solar Global Horizontal' }]}/>
   
     <div class="row"> 
+          <div class="row"> 
+      <div>
+      <h3>Dados Estatísticos</h3>
+        <div class="row">
+          <div class="card">
+            <h3>Normal</h3>
+            <p>{distribution}</p>
+          </div>
+  
+          <div class="card">
+            <h3>Assimetria</h3>
+            <p>{assimetria}</p>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="card">
+            <h3>Média</h3>
+            <p>{media}</p>
+          </div>
+  
+          <div class="card">
+            <h3>Médiana</h3>
+            <p>{mediana}</p>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="card">
+            <h3>Desvio Padrão</h3>
+            <p>{desvioPadrao}</p>
+          </div>
+  
+          <div class="card">
+            <h3>Moda</h3>
+            <p>{moda}</p>
+          </div>
+        </div>
+      </div>
+      
+      <div>
+      <h3>Gráfico de Distribuição Normal</h3>
+        <ReactApexChart options={state.boxPlotOptions} series={state.boxPlotSeries} type="boxPlot" height={400} width={600} />
+      </div>
+    </div>
       <div>
         <div class="row">
           <div class="card">
@@ -289,8 +425,12 @@ const Chart = () => {
         <ReactApexChart options={state.boxPlotOptions} series={state.boxPlotSeries} type="boxPlot" height={400} width={600} />
       </div>
     </div>
+
+    <div id="chartsScatter">  
+    <ReactApexChart options={state.regressionOptions} series={state.regressionSeries} type="scatter" height={400} width={1100} />
+    </div>
   
-    <div id="charts">
+    <div id="chartsLine">  
       <ReactApexChart options={state.options} series={state.series} type="line" height={450} width={1200}/>
     </div>
   

@@ -14,3 +14,6 @@ export const calculateNormalDistribution = (data, x) => {
 
 
 
+
+
+
