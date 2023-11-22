@@ -10,6 +10,7 @@ import { calculateNormalDistribution } from './estatistica/distribuicaoNormal';
 import { calculateFirstQuartile, calculateThirdQuartile } from './estatistica/quartil'
 import { calculateLinearRegression } from './estatistica/regressao';
 import Legend from './legenda'
+import PowerBi from "./powerBi";
 import "./style.css"
 
 const Chart = () => {
@@ -316,8 +317,9 @@ const Chart = () => {
   return (
 
     <div className='APP'>
-
+  
     <div id="filtro">
+  
       <div>
         <h6>Data Inicial</h6>
         <input type="date" value={startDate} onChange={handleStartDateChange}/>
@@ -332,12 +334,16 @@ const Chart = () => {
         <h6>Valor distribuição normal</h6>
         <input type="number" value={x} onChange={handleXChange}/> 
       </div>
+
+      <div><PowerBi/></div>
+
     </div>
+
 
     <Legend items={[
       { color: '#2D81C2', label: ' DNI: Irradiação Solar Direta Normal' }, { color: '#FFC20F', label: 'GHI: Irradiação Solar Global Horizontal' }]}/>
   
-    <div class="row"> 
+    <div > 
           <div class="row"> 
       <div>
       <h3>Dados Estatísticos</h3>
@@ -380,58 +386,17 @@ const Chart = () => {
       
       <div>
       <h3>Gráfico de Distribuição Normal</h3>
-        <ReactApexChart options={state.boxPlotOptions} series={state.boxPlotSeries} type="boxPlot" height={400} width={600} />
-      </div>
+        <ReactApexChart options={state.boxPlotOptions} series={state.boxPlotSeries} type="boxPlot" height={350} width={500} />
+      </div> 
     </div>
-      <div>
-        <div class="row">
-          <div class="card">
-            <h3>Normal</h3>
-            <p>{distribution}</p>
-          </div>
-  
-          <div class="card">
-            <h3>Assimetria</h3>
-            <p>{assimetria}</p>
-          </div>
-        </div>
-        
-        <div class="row">
-          <div class="card">
-            <h3>Média</h3>
-            <p>{media}</p>
-          </div>
-  
-          <div class="card">
-            <h3>Médiana</h3>
-            <p>{mediana}</p>
-          </div>
-        </div>
-  
-        <div class="row">
-          <div class="card">
-            <h3>Desvio Padrão</h3>
-            <p>{desvioPadrao}</p>
-          </div>
-  
-          <div class="card">
-            <h3>Moda</h3>
-            <p>{moda}</p>
-          </div>
-        </div>
-      </div>
-      
-      <div>
-        <ReactApexChart options={state.boxPlotOptions} series={state.boxPlotSeries} type="boxPlot" height={400} width={600} />
-      </div>
-    </div>
+  </div>
 
     <div id="chartsScatter">  
-    <ReactApexChart options={state.regressionOptions} series={state.regressionSeries} type="scatter" height={400} width={1100} />
+    <ReactApexChart options={state.regressionOptions} series={state.regressionSeries} type="scatter" height={400} width={1000} />
     </div>
   
     <div id="chartsLine">  
-      <ReactApexChart options={state.options} series={state.series} type="line" height={450} width={1200}/>
+      <ReactApexChart options={state.options} series={state.series} type="line" height={450} width={1000}/>
     </div>
   
   </div>
